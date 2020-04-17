@@ -2,12 +2,13 @@ const net = require('net');
 
 const server = net.createServer();
 
-const baseId = 0;
+let baseId = 0;
 const existingSockets = {};
 
 server.on('connection', socket => {
   socket.id = baseId++;
   existingSockets[socket.id] = socket;
+  console.log(`${socket.id} connected`);
 
   socket.on('data', data => {
     Object.entries(existingSockets).forEach(([, socket]) => {
